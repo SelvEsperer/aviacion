@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'company',
+            'name',
             'description',
             'address',
             'phone',
@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_by_date',
             // 'last_modified_by_id',
             // 'last_modified_by_date',
+            // 'code',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

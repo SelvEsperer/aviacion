@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'company')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
@@ -37,6 +37,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'last_modified_by_id')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'last_modified_by_date')->textInput() ?>
+
+    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "company".
  *
  * @property string $id
- * @property string $company
+ * @property string $name
  * @property string $description
  * @property string $address
  * @property string $phone
@@ -21,6 +21,7 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property string $code
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -38,11 +39,12 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company'], 'required'],
+            [['name', 'code'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
-            [['company', 'address'], 'string', 'max' => 256],
+            [['name', 'address'], 'string', 'max' => 256],
             [['description'], 'string', 'max' => 512],
-            [['phone', 'mobile', 'email', 'visit_us', 'social_link', 'title', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50]
+            [['phone', 'mobile', 'email', 'visit_us', 'social_link', 'title', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
+            [['code'], 'string', 'max' => 45]
         ];
     }
 
@@ -53,7 +55,7 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'company' => 'Company',
+            'name' => 'Name',
             'description' => 'Description',
             'address' => 'Address',
             'phone' => 'Phone',
@@ -66,6 +68,7 @@ class Company extends \yii\db\ActiveRecord
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
+            'code' => 'Code',
         ];
     }
 
