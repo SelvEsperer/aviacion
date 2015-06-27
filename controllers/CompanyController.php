@@ -118,4 +118,23 @@ class CompanyController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * 
+     */
+    public function actionInformation() {
+    	$company = Company::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(
+    			"id"  => $company->id,
+    			"name"  => $company->name,
+    			"description"  => $company->description,
+    			"address"  => $company->address,
+    			"phone"  => $company->phone,
+    			"mobile"  => $company->mobile,
+    			"email"  => $company->email,
+    			"visit_us"  => $company->visit_us,
+    			"social_link"  => $company->social_link,
+    			"title"  => $company->title    					
+    	);
+    	echo json_encode($info);
+    }
 }
