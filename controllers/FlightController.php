@@ -118,4 +118,22 @@ class FlightController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Shows the inforamtions about Flight Model
+     */
+    public function actionInformation() {
+    	$flight = Flight::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(
+    			"name"  => $flight->name,
+    			"description"  => $flight->description,
+    			"speed"  => $flight->speed,
+    			"capacity"  => $flight->capacity,
+    			"resgistration_mark" => $flight->registration_mark,
+    			"endurance" => $flight->endurance,
+    			"cruising_level" => $flight->cruising_level,
+    			"luggage_capacity" => $flight->luggage_capacity,
+    			"email"  => $flight->email
+    	);
+    	echo json_encode($info);
+    }
 }

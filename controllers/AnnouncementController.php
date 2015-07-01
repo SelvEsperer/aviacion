@@ -118,4 +118,16 @@ class AnnouncementController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Shows the inforamtions about Announcement Model
+     */
+    public function actionInformation() {
+    	$announcement = Announcement::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(
+    			"title"  => $announcement->id,
+    			"type"  => $announcement->name,
+    			"description"  => $announcement->description
+    	);
+    	echo json_encode($info);
+    }
 }

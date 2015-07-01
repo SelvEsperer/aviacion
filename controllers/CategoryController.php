@@ -118,4 +118,15 @@ class CategoryController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Shows the inforamtions about Category Model
+     */
+    public function actionInformation() {
+    	$category = Category::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(
+    			"name"  => $category->name,
+    			"description"  => $category->description    			
+    	);
+    	echo json_encode($info);
+    }
 }

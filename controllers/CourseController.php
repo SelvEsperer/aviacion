@@ -118,4 +118,17 @@ class CourseController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Shows the inforamtions about Course Model
+     */
+    public function actionInformation() {
+    	$course = Course::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(    			
+    			"name"  => $course->name,
+    			"duration"  => $course->duration,
+    			"details"  => $course->details,
+    			"fees"  => $course->fees   			
+    	);
+    	echo json_encode($info);
+    }
 }

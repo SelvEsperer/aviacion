@@ -118,4 +118,18 @@ class SchoolController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Shows the inforamtions about School Model
+     */
+    public function actionInformation() {
+    	$school = School::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(    			
+    			"name"  => $school->name,
+    			"description"  => $school->description,
+    			"about"  => $school->about,
+    			"address"  => $school->address,    			
+    			"email"  => $school->email
+    	);
+    	echo json_encode($info);
+    }
 }

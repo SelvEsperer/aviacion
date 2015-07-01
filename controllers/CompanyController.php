@@ -119,7 +119,7 @@ class CompanyController extends Controller
         }
     }
     /**
-     * 
+     * Shows the inforamtions about Company Model
      */
     public function actionInformation() {
     	$company = Company::find()->where(['code' => 'ARIRANG'])->one();
