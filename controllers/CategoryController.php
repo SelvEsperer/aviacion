@@ -122,11 +122,31 @@ class CategoryController extends Controller
      * Shows the inforamtions about Category Model
      */
     public function actionInformation() {
-    	$category = Category::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array();
+    	$category = Category::find()->all();
+		foreach ($category as $key => $value) {
+			$info []=  array(
+					 "name" =>$value->name,
+					 "description" =>$value->description	
+					) ;
+			
+		} 
+		echo json_encode(array_values($info));
+
+    }
+    /**
+     * Show info about Category model filtered by id
+     */
+    public function actionCategoryflight($id)
+    {
+    	$categoryid = Category::find()->where(['id'=> $id])->one();
+    	$info = array();
+    	foreach ($categoryid as $key=>$value) {
     	$info = array(
-    			"name"  => $category->name,
-    			"description"  => $category->description    			
-    	);
+    			"name" => $categoryid->name,
+    			"description" => $categoryid->description
+    		);
+    	}
     	echo json_encode($info);
     }
 }

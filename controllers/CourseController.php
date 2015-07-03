@@ -122,13 +122,17 @@ class CourseController extends Controller
      * Shows the inforamtions about Course Model
      */
     public function actionInformation() {
-    	$course = Course::find()->where(['code' => 'ARIRANG'])->one();
-    	$info = array(    			
-    			"name"  => $course->name,
-    			"duration"  => $course->duration,
-    			"details"  => $course->details,
-    			"fees"  => $course->fees   			
-    	);
+    	$course = Course::find()->all();
+    	$info = array();
+    	foreach ($course as $key => $value) {
+	    	$info[] = array(    			
+	    			"name"  => $value->name,
+	    			"duration"  => $value->duration,
+	    			"details"  => $value->details,
+	    			"fees"  => $value->fees,
+	    			"session" =>$value->session   			
+	    		);
+    	}
     	echo json_encode($info);
     }
 }

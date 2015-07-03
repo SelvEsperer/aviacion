@@ -122,13 +122,15 @@ class SchoolController extends Controller
      * Shows the inforamtions about School Model
      */
     public function actionInformation() {
-    	$school = School::find()->where(['code' => 'ARIRANG'])->one();
+    	$school = School::find()->one();
     	$info = array(    			
     			"name"  => $school->name,
     			"description"  => $school->description,
     			"about"  => $school->about,
     			"address"  => $school->address,    			
-    			"email"  => $school->email
+    			"email"  => $school->email,
+    			"simulation_info" =>$school->simulation_info,
+    			"safety_program" =>$school->safety_program
     	);
     	echo json_encode($info);
     }

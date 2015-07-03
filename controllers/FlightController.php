@@ -121,19 +121,20 @@ class FlightController extends Controller
     /**
      * Shows the inforamtions about Flight Model
      */
-    public function actionInformation() {
-    	$flight = Flight::find()->where(['code' => 'ARIRANG'])->one();
+    public function actionShowdetails($id) {
+    	$flight = Flight::find()->where(['id' => $id])->one();
     	$info = array(
     			"name"  => $flight->name,
+    			"image" =>$flight->image,
     			"description"  => $flight->description,
     			"speed"  => $flight->speed,
     			"capacity"  => $flight->capacity,
     			"resgistration_mark" => $flight->registration_mark,
     			"endurance" => $flight->endurance,
     			"cruising_level" => $flight->cruising_level,
-    			"luggage_capacity" => $flight->luggage_capacity,
-    			"email"  => $flight->email
+    			"luggage_capacity" => $flight->luggage_capacity    			
     	);
     	echo json_encode($info);
     }
+    
 }
