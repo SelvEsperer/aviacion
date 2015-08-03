@@ -120,6 +120,8 @@ class FlightController extends Controller
     }
     /**
      * Shows the inforamtions about Flight Model
+     * Filtered by ID
+     * 
      */
     public function actionShowdetails($id) {
     	$flight = Flight::find()->where(['id' => $id])->one();
@@ -134,6 +136,8 @@ class FlightController extends Controller
     			"cruising_level" => $flight->cruising_level,
     			"luggage_capacity" => $flight->luggage_capacity    			
     	);
+    	
+    	
     	echo json_encode($info);
     }
     

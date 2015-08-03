@@ -119,19 +119,23 @@ class CourseController extends Controller
         }
     }
     /**
-     * Shows the inforamtions about Course Model
+     * Finds the detailed informations about courses
+     * And returns them
      */
     public function actionInformation() {
     	$course = Course::find()->all();
     	$info = array();
     	foreach ($course as $key => $value) {
-	    	$info[] = array(    			
-	    			"name"  => $value->name,
-	    			"duration"  => $value->duration,
-	    			"details"  => $value->details,
-	    			"fees"  => $value->fees,
-	    			"session" =>$value->session   			
-	    		);
+    		$info[] = array(
+    				"name"  => $value->name,
+    				"details" => $value->details,
+    				"ground"  => $value->ground,
+    				"flying"  => $value->flying,
+    				"pre_requisite"  => $value->pre_requisite,
+    				"education" => $value->education,
+    				"min_age" =>$value->min_age
+    				
+    		);
     	}
     	echo json_encode($info);
     }

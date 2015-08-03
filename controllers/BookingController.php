@@ -8,23 +8,26 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\app\models;
+
 
 /**
  * BookingController implements the CRUD actions for Booking model.
  */
 class BookingController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
+	public $enableCsrfValidation = false;
+	public function behaviors()
+	    {
+	        return [
+	            'verbs' => [
+	                'class' => VerbFilter::className(),
+	                'actions' => [
+	                    'delete' => ['post'],
+	                ],
+	            ],
+	        ];
+	    }
 
     /**
      * Lists all Booking models.
@@ -118,4 +121,59 @@ class BookingController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Books Flight from a POST request
+     * Sends email if booking info saved on database
+     * 
+     */
+    public function actionFlightbook() 
+    {
+    	$this->authenticate();
+    	$post = file_get_contents("php://input");
+    	$data = json_decode($post, true);
+    	echo $data['flight_type'];
+    	
+    	$book = new Booking();
+    	
+    	$book->flight_type = $data['flight_type'];
+    	$book->name = $data['name'];
+    	$book->from_location = $data['from_location'];
+    	$book->to_location = $data['to_location'];
+    	$book->departure_date = $data['departure_date'];
+    	$book->arrival_date = $data['arrival_date'];
+    	$book->age = $data['age'];
+    	$book->first_name = $data['first_name'];
+    	$book->last_name = $data['last_name'];
+    	$book->middle_name = $data['middle_name'];
+    	$book->passport_number = $data['passport_number'];
+    	$book->date_of_birth = $data['date_of_birth'];
+    	$book->company_name = $data['company_name'];
+    	$book->agent_name = $data['agent_name'];
+    	$book->contact_number = $data['contact_number'];
+    	$book->email_address = $data['email_address'];
+    	$book->country = $data['country'];
+    	$book->state = $data['state'];
+    	$book->city = $data['city'];
+    	$book->street_address = $data['street_address'];
+    	$book->zipcode = $data['zipcode'];
+    	if($book->save() === true){
+    		echo "success db";
+    		Yii::$app->mailer->compose()
+		    ->setFrom('')
+		    ->setTo('')
+		    ->setSubject('')
+		    ->setTextBody(' ')
+		    ->setHtmlBody('')
+		    ->send();
+    		
+    	}
+    	//if(parent::authenticate()) 
+    	//{
+    	//echo "calling actionflightbook"; 
+    	//}
+    	//$post = Yii::$app->request->post();
+    	//echo "hello"; 
+
+    }
+
 }

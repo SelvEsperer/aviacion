@@ -30,14 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'duration',
-            'fees',
-            'details',
-            'session',
+            'ground',
+            'flying',
+            'pre_requisite',
+            'education',
             'created_by_id',
             'created_by_date',
             'last_modified_by_id',
             'last_modified_by_date',
+            'min_age',
+            'details',
         ],
     ]) ?>
 
