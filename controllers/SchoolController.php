@@ -121,7 +121,7 @@ class SchoolController extends Controller
     /**
      * Shows the inforamtions about School Model
      */
-    public function actionInformation() {
+    public function actionList() {
     	$school = School::find()->one();
     	$info = array(    			
     			"name"  => $school->name,
@@ -132,6 +132,28 @@ class SchoolController extends Controller
     			"simulation_info" =>$school->simulation_info,
     			"safety_program" =>$school->safety_program
     	);
+    	echo json_encode($info);
+    }
+    /**
+     * Finds info of course by id
+     */
+    public function actionCourses($id) {
+    	$contacts = Course::find()->where(['school_id' => $id])->all();
+    	$info = array();
+    	foreach ($contacts as $key => $value) {
+    		$info[] = array(
+    				"id"  => $value->id,
+    				"name"  => $value->name,
+    				"description" => $value->description,
+    				"ground"  => $value->ground,
+    				"flying"  => $value->flying,
+    				"pre_requisite"  => $value->pre_requisite,
+    				"education" => $value->education,
+    				"instrument_time" => $value->instrument_time,
+    				"solo" => $value->solo,
+    				"min_age" =>$value->min_age
+    		);
+    	}
     	echo json_encode($info);
     }
 }

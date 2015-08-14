@@ -17,6 +17,7 @@ class FlightController extends Controller
     public function behaviors()
     {
         return [
+        		
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -118,16 +119,32 @@ class FlightController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionCategory($id) {
+    	$flights = Flight::find()->where(['category_id' => $id])->all();
+    	$info = array();
+    	foreach ($flights as $key => $value) {
+    		$info[] = array(
+    				"id"  => $value->id,
+    				"category_id" => $value->category_id,
+    				"name"  => $value->name,
+    				"description"  => $value->description
+    
+    		);
+    	}
+    	echo json_encode($info);
+    }
+    
     /**
      * Shows the inforamtions about Flight Model
      * Filtered by ID
      * 
      */
-    public function actionShowdetails($id) {
+    public function actionDetails($id) {
     	$flight = Flight::find()->where(['id' => $id])->one();
     	$info = array(
     			"name"  => $flight->name,
-    			"image" =>$flight->image,
+    			//"image" =>$flight->image,
     			"description"  => $flight->description,
     			"speed"  => $flight->speed,
     			"capacity"  => $flight->capacity,
@@ -136,8 +153,11 @@ class FlightController extends Controller
     			"cruising_level" => $flight->cruising_level,
     			"luggage_capacity" => $flight->luggage_capacity    			
     	);
-    	
-    	
+    	$path = $flight->image;
+    	//echo $path;
+    	$data = file_get_contents($path);   		
+    	$encodedImage = base64_encode($data);    	
+ 		$info["image"] = $encodedImage;
     	echo json_encode($info);
     }
     

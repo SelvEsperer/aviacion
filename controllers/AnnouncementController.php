@@ -127,7 +127,7 @@ class AnnouncementController extends Controller
 		foreach ($announcement as $key => $value) {
 			$info []=  array(
 					 "name" =>$value->title,
-					 //"description" =>$value->description	
+					 "description" =>$value->description	
 					) ;
 			
 		} 

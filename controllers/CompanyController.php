@@ -121,7 +121,7 @@ class CompanyController extends Controller
     /**
      * Shows the inforamtions about Company Model
      */
-    public function actionInformation() {
+    public function actionList() {
     	$company = Company::find()->where(['code' => 'ARIRANG'])->one();
     	$info = array(
     			"id"  => $company->id,
@@ -135,6 +135,26 @@ class CompanyController extends Controller
     			"social_link"  => $company->social_link,
     			"title"  => $company->title    					
     	);
+    	echo json_encode($info);
+    }
+    
+    /**
+     * Finds company by id
+     */
+    public function actionContacts($id) {
+    	$contacts = Contact::find()->where(['company_id' => $id])->all();
+    	$info = array();
+    	foreach ($contacts as $key => $value) {
+    		$info[] = array(
+    				"id"  => $value->id,
+    				"titile" => $value->title,
+    				"subtitle" => $value->subtitle,
+    				"email"  => $value->email,
+    				"phone"  => $value->phone,
+    				"mobile"  => $value->mobile
+    
+    		);
+    	}
     	echo json_encode($info);
     }
 }

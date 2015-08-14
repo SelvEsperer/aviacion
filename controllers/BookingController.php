@@ -131,8 +131,7 @@ class BookingController extends Controller
     	$this->authenticate();
     	$post = file_get_contents("php://input");
     	$data = json_decode($post, true);
-    	echo $data['flight_type'];
-    	
+    	$message = array("success"=>"true", "Message"=>"Booking is successful");    	
     	$book = new Booking();
     	
     	$book->flight_type = $data['flight_type'];
@@ -157,23 +156,17 @@ class BookingController extends Controller
     	$book->street_address = $data['street_address'];
     	$book->zipcode = $data['zipcode'];
     	if($book->save() === true){
-    		echo "success db";
-    		Yii::$app->mailer->compose()
+    		echo json_encode($message);
+    	/*	Yii::$app->mailer->compose()
 		    ->setFrom('')
 		    ->setTo('')
 		    ->setSubject('')
 		    ->setTextBody(' ')
 		    ->setHtmlBody('')
 		    ->send();
-    		
+    		*/
     	}
-    	//if(parent::authenticate()) 
-    	//{
-    	//echo "calling actionflightbook"; 
-    	//}
-    	//$post = Yii::$app->request->post();
-    	//echo "hello"; 
-
+		//echo json_encode($data);
     }
 
 }
