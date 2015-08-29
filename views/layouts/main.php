@@ -26,7 +26,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => 'Home',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -35,10 +35,18 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
                     ['label' => 'About', 'url' => ['/site/about']],
-                	['label' => 'School', 'url' => ['/school/index']],
-                    ['label' => 'Contact', 'url' => ['/site/contact']],
+                	['label' => 'Agent', 'url' => ['/agent/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Announcement', 'url' => ['/announcement/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Booking', 'url' => ['/booking/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Category', 'url' => ['/category/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Client', 'url' => ['/client/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Company', 'url' => ['/company/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Course', 'url' => ['/course/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Flight', 'url' => ['/flight/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'Member', 'url' => ['/member/index'],'visible' => !Yii::$app->user->isGuest],
+                	['label' => 'School', 'url' => ['/school/index'],'visible' => !Yii::$app->user->isGuest],
+                    ['label' => 'Contact', 'url' => ['/site/contact'], ],
                     Yii::$app->user->isGuest ?
                         ['label' => 'Login', 'url' => ['/site/login']] :
                         ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
@@ -59,8 +67,8 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-left">&copy; Arirang Aviation <?= date('Y') ?></p>
+            <p class="pull-right"></p>
         </div>
     </footer>
 

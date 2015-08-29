@@ -5,25 +5,29 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "client".
  *
- * @property string $id
+ * @property integer $id
  * @property string $name
  * @property string $description
+ * @property string $code
+ * @property string $image
  * @property string $created_by_id
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
- * @property string $role
+ * @property string $contact_address
+ * @property string $contact_number
+ * @property string $title
  */
-class Category extends \yii\db\ActiveRecord
+class Client extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'category';
+        return 'client';
     }
 
     /**
@@ -33,10 +37,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['image'], 'string'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
-            [['name'], 'string', 'max' => 100],
-            [['description'], 'string', 'max' => 200],
-            [['created_by_id', 'last_modified_by_id', 'role'], 'string', 'max' => 50]
+            [['name', 'code', 'created_by_id', 'last_modified_by_id', 'contact_address', 'contact_number', 'title'], 'string', 'max' => 50],
+            [['description'], 'string', 'max' => 512]
         ];
     }
 
@@ -49,20 +53,24 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'description' => 'Description',
+            'code' => 'Code',
+            'image' => 'Image',
             'created_by_id' => 'Created By ID',
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
-            'role' => 'Role',
+            'contact_address' => 'Contact Address',
+            'contact_number' => 'Contact Number',
+            'title' => 'Title',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return CategoryQuery the active query used by this AR class.
+     * @return ClientQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CategoryQuery(get_called_class());
+        return new ClientQuery(get_called_class());
     }
 }

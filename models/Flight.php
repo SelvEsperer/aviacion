@@ -21,6 +21,8 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property integer $category_id
+ * @property string $code
  */
 class Flight extends \yii\db\ActiveRecord
 {
@@ -38,11 +40,13 @@ class Flight extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description'], 'required'],
+            [['name', 'description', 'category_id', 'code'], 'required'],
+            [['image'], 'string'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
+            [['category_id'], 'integer'],
             [['name'], 'string', 'max' => 100],
-            [['description', 'image'], 'string', 'max' => 256],
-            [['speed', 'capacity', 'registration_mark', 'endurance', 'cruising_level', 'luggage_capacity', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50]
+            [['description'], 'string', 'max' => 256],
+            [['speed', 'capacity', 'registration_mark', 'endurance', 'cruising_level', 'luggage_capacity', 'created_by_id', 'last_modified_by_id', 'code'], 'string', 'max' => 50]
         ];
     }
 
@@ -66,6 +70,8 @@ class Flight extends \yii\db\ActiveRecord
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
+            'category_id' => 'Category ID',
+            'code' => 'Code',
         ];
     }
 

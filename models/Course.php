@@ -18,7 +18,10 @@ use Yii;
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
  * @property string $min_age
- * @property string $details
+ * @property string $description
+ * @property string $school_id
+ * @property string $solo
+ * @property string $instrument_time
  */
 class Course extends \yii\db\ActiveRecord
 {
@@ -36,11 +39,13 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'ground', 'min_age', 'details'], 'required'],
+            [['name', 'ground', 'min_age'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
-            [['name'], 'string', 'max' => 100],
-            [['ground', 'flying', 'education', 'created_by_id', 'last_modified_by_id', 'min_age', 'details'], 'string', 'max' => 50],
-            [['pre_requisite'], 'string', 'max' => 512]
+            [['school_id'], 'integer'],
+            [['name', 'solo', 'instrument_time'], 'string', 'max' => 100],
+            [['ground', 'flying', 'created_by_id', 'last_modified_by_id', 'min_age'], 'string', 'max' => 50],
+            [['pre_requisite', 'education'], 'string', 'max' => 512],
+            [['description'], 'string', 'max' => 1000]
         ];
     }
 
@@ -61,7 +66,10 @@ class Course extends \yii\db\ActiveRecord
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
             'min_age' => 'Min Age',
-            'details' => 'Details',
+            'description' => 'Description',
+            'school_id' => 'School ID',
+            'solo' => 'Solo',
+            'instrument_time' => 'Instrument Time',
         ];
     }
 

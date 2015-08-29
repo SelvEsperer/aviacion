@@ -16,6 +16,8 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property string $code
+ * @property string $date
  */
 class Announcement extends \yii\db\ActiveRecord
 {
@@ -33,9 +35,10 @@ class Announcement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['duration', 'created_by_date', 'last_modified_by_date'], 'safe'],
-            [['title', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
-            [['description'], 'string', 'max' => 256],
+            [['title', 'code', 'date'], 'required'],
+            [['duration', 'created_by_date', 'last_modified_by_date', 'date'], 'safe'],
+            [['title', 'created_by_id', 'last_modified_by_id', 'code'], 'string', 'max' => 50],
+            [['description'], 'string', 'max' => 512],
             [['type'], 'string', 'max' => 100]
         ];
     }
@@ -55,6 +58,8 @@ class Announcement extends \yii\db\ActiveRecord
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
+            'code' => 'Code',
+            'date' => 'Date',
         ];
     }
 

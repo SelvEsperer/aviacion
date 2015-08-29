@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CourseController implements the CRUD actions for Course model.
@@ -17,6 +18,16 @@ class CourseController extends Controller
     public function behaviors()
     {
         return [
+        		'access' => [
+        				'class' => AccessControl::className(),
+        				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -122,21 +133,25 @@ class CourseController extends Controller
      * Finds the detailed informations about courses
      * And returns them
      */
-    public function actionInformation() {
-    	$course = Course::find()->all();
-    	$info = array();
-    	foreach ($course as $key => $value) {
-    		$info[] = array(
-    				"name"  => $value->name,
-    				"details" => $value->details,
-    				"ground"  => $value->ground,
-    				"flying"  => $value->flying,
-    				"pre_requisite"  => $value->pre_requisite,
-    				"education" => $value->education,
-    				"min_age" =>$value->min_age
-    				
-    		);
+    public function actionList() {
+    	if($this->authenticate()) {
+    		$course = Course::find()->all();
+    		$info = array();
+    		foreach ($course as $key => $value) {
+    			$info[] = array(
+    					"name"  => $value->name,
+    					"description" => $value->description,
+    					"ground"  => $value->ground,
+    					"flying"  => $value->flying,
+    					"pre_requisite"  => $value->pre_requisite,
+    					"education" => $value->education,
+    					"min_age" =>$value->min_age,
+    					"solo" => $value->solo,
+    					"instrument_time" => $value->instrument_time
+    			);
+    		}
+    		echo json_encode($info);
     	}
-    	echo json_encode($info);
+    	
     }
 }

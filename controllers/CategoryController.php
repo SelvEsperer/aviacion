@@ -8,7 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\models\Flight;
+use yii\filters\AccessControl;
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
@@ -17,6 +18,18 @@ class CategoryController extends Controller
     public function behaviors()
     {
         return [
+        		'access' => [
+        				'class' => AccessControl::className(),
+        				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								//'actions' => ['admin'],
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
+        		
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -122,32 +135,51 @@ class CategoryController extends Controller
      * Shows the inforamtions about Category Model
      */
     public function actionList() {
-    	$info = array();
-    	$category = Category::find()->all();
-		foreach ($category as $key => $value) {
-			$info []=  array(
-					"id" => $value->id,
-					 "name" =>$value->name,
-					 "description" =>$value->description	
-					) ;
-			
-		} 
-		echo json_encode($info);
+    	if($this->authenticate()) {
+    		$info = array();
+    		$category = Category::find()->all();
+    		foreach ($category as $key => $value) {
+    			$info []=  array(
+    					"id" => $value->id,
+    					"name" =>$value->name,
+    					"description" =>$value->description
+    			);
+    				
+    		}
+    		echo json_encode($info);
+    	}
 
     }
     /**
      * Show info about Category model filtered by id
      */
-    public function actionDetails($id)
-    {
-    	$categoryid = Category::find()->where(['id'=> $id])->one();
+    public function actionDetails($id) {
+   		if($this->authenticate()) {
+   			$category = Category::find()->where(['id'=> $id])->one();
+   			$info = array(
+   					"name" => $category->name,
+   					"description" => $category->description
+   			);
+   			echo json_encode($info);
+   		}
+
+    }
+    /**
+     * Shows list of flight filtered by code
+     */
+    public function actionFlights($id){
+    	if($this->authenticate()) {
+    	$flight = Flight::find()->where(['like', 'code', $id])->all();
     	$info = array();
-    	foreach ($categoryid as $key=>$value) {
-    	$info = array(
-    			"name" => $categoryid->name,
-    			"description" => $categoryid->description
-    		);
+   		foreach ($flight as $key=>$value) {
+   			$info[] = array (
+   					"name" => $value->name,
+   					"description" => $value->description,
+   					"image" => $value->image
+    			);
+    		}
+   		echo json_encode($info);
     	}
-    	echo json_encode($info);
+    	
     }
 }

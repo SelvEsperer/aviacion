@@ -8,6 +8,9 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\models\Activity;
+use app\models\Course;
 
 /**
  * SchoolController implements the CRUD actions for School model.
@@ -17,6 +20,16 @@ class SchoolController extends Controller
     public function behaviors()
     {
         return [
+        		'access' => [
+        				'class' => AccessControl::className(),
+        				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -122,38 +135,66 @@ class SchoolController extends Controller
      * Shows the inforamtions about School Model
      */
     public function actionList() {
-    	$school = School::find()->one();
-    	$info = array(    			
-    			"name"  => $school->name,
-    			"description"  => $school->description,
-    			"about"  => $school->about,
-    			"address"  => $school->address,    			
-    			"email"  => $school->email,
-    			"simulation_info" =>$school->simulation_info,
-    			"safety_program" =>$school->safety_program
-    	);
-    	echo json_encode($info);
+    	if($this->authenticate()) {
+    		$school = School::find()->one();
+    		$info = array(
+    				"name"  => $school->name,
+    				"description"  => $school->description,
+    				"about"  => $school->about,
+    				"address"  => $school->address,
+    				"email"  => $school->email,
+    				"simulation_info" =>$school->simulation_info,
+    				"safety_program" =>$school->safety_program
+    		);
+    		echo json_encode($info);
+    	}
+    	
     }
+    /**
+     * Shows info about School Activities by id
+     */
+    public function actionActivities($id){
+    	if($this->authenticate()) {
+    		$activity = Activity::find()->where(['code' => $id])->all();
+    		$info = array();
+    		foreach ($activity as $key =>$value) {
+    			$info[] = array(
+    					"id" => $value->id,
+    					"name" => $value->name,
+    					"description" => $value->description,
+    					"image1" => $value->image1,
+    					"image2" => $value->image2,
+    					"image3" => $value->image3
+    			);
+    		}
+    		echo json_encode($info);
+    	}
+    	
+    }
+    
     /**
      * Finds info of course by id
      */
     public function actionCourses($id) {
-    	$contacts = Course::find()->where(['school_id' => $id])->all();
-    	$info = array();
-    	foreach ($contacts as $key => $value) {
-    		$info[] = array(
-    				"id"  => $value->id,
-    				"name"  => $value->name,
-    				"description" => $value->description,
-    				"ground"  => $value->ground,
-    				"flying"  => $value->flying,
-    				"pre_requisite"  => $value->pre_requisite,
-    				"education" => $value->education,
-    				"instrument_time" => $value->instrument_time,
-    				"solo" => $value->solo,
-    				"min_age" =>$value->min_age
-    		);
+    	if($this->authenticate()) {
+    		$contacts = Course::find()->where(['school_id' => $id])->all();
+    		$info = array();
+    		foreach ($contacts as $key => $value) {
+    			$info[] = array(
+    					"id"  => $value->id,
+    					"name"  => $value->name,
+    					"description" => $value->description,
+    					"ground"  => $value->ground,
+    					"flying"  => $value->flying,
+    					"pre_requisite"  => $value->pre_requisite,
+    					"education" => $value->education,
+    					"instrument_time" => $value->instrument_time,
+    					"solo" => $value->solo,
+    					"min_age" =>$value->min_age
+    			);
+    		}
+    		echo json_encode($info);
     	}
-    	echo json_encode($info);
+    	
     }
 }

@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AgentController implements the CRUD actions for Agent model.
@@ -17,6 +18,16 @@ class AgentController extends Controller
     public function behaviors()
     {
         return [
+        	'access' => [
+       			'class' => AccessControl::className(),
+   				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -121,5 +132,28 @@ class AgentController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    /**
+     * Shows info about Agent model
+     */
+    public function actionList() {
+    	if($this->authenticate()) {
+    	$agent = Agent::find()->all();
+    	$info = array();
+    	foreach ($agent as $key=>$value) {
+    		$info[] = array(
+    				"name" => $value->name, 
+    				"title" => $value->title,
+    				"desctription" => $value->descripton,
+    				"image" => $value->image
+    		);
+    	}
+    	echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
+    	}
     }
 }

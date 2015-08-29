@@ -14,6 +14,7 @@ use Yii;
  * @property string $image1
  * @property string $image2
  * @property string $image3
+ * @property string $code
  */
 class Activity extends \yii\db\ActiveRecord
 {
@@ -31,9 +32,10 @@ class Activity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['school_id', 'name', 'description', 'code'], 'required'],
             [['school_id'], 'integer'],
             [['image1', 'image2', 'image3'], 'string'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'code'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 512]
         ];
     }
@@ -51,6 +53,7 @@ class Activity extends \yii\db\ActiveRecord
             'image1' => 'Image1',
             'image2' => 'Image2',
             'image3' => 'Image3',
+            'code' => 'Code',
         ];
     }
 

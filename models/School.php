@@ -39,8 +39,8 @@ class School extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
             [['name'], 'string', 'max' => 100],
-            [['description'], 'string', 'max' => 512],
-            [['about', 'simulation_info', 'safety_program'], 'string', 'max' => 200],
+            [['description'], 'string', 'max' => 1024],
+            [['about', 'simulation_info', 'safety_program'], 'string', 'max' => 1024],
             [['email', 'address', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50]
         ];
     }

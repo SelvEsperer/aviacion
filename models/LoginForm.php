@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\AdminGroup;
 
 /**
  * LoginForm is the model behind the login form.
@@ -41,14 +42,12 @@ class LoginForm extends Model
      */
     public function validatePassword($attribute, $params)
     {
-    	if (!$this->hasErrors()) {
+        if (!$this->hasErrors()) {
             $user = $this->getUser();
-            //$this->addError($attribute, $this->password. ' Incorrect username or password.'.$user->password);
-            if($this->password != $user->password){
-            	$this->addError($attribute, 'Incorrect username or password.');
-            } else {
-            	return true;
-            }        
+
+            if (!$user || !$user->validatePassword($this->password)) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            }
         }
     }
 
@@ -57,23 +56,14 @@ class LoginForm extends Model
      * @return boolean whether the user is logged in successfully
      */
     public function login()
-    {	//return $this->validate();
-    	if ($this->validate()) {
-            return Yii::$app->user->login($this->getSysUser(), $this->rememberMe ? 3600*24*30 : 0);
-            
-       } else {
-           return false;
-       }
-    }
-	
-    public function getSysUser()
     {
-    	if ($this->_user === false) {
-    		$this->_user = User::findByUsername("admin");
-    	}    
-    	return $this->_user;
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        } else {
+            return false;
+        }
     }
-    
+
     /**
      * Finds user by [[username]]
      *
@@ -82,7 +72,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = Member::find()->where(['username' => $this->username])->one();
+            $this->_user = AdminGroup::findByUsername($this->username);
         }
 
         return $this->_user;

@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AnnouncementController implements the CRUD actions for Announcement model.
@@ -17,6 +18,17 @@ class AnnouncementController extends Controller
     public function behaviors()
     {
         return [
+        		'access' => [
+        				'class' => AccessControl::className(),
+        				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								//'actions' => ['admin'],
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -121,16 +133,20 @@ class AnnouncementController extends Controller
     /**
      * Shows the inforamtions about Announcement Model
      */
-    public function actionInformation() {
+    public function actionList() {
+    	if ($this->authenticate()){
     	$info = array();
     	$announcement = Announcement::find()->all();
 		foreach ($announcement as $key => $value) {
 			$info []=  array(
-					 "name" =>$value->title,
-					 "description" =>$value->description	
-					) ;
+					"title" =>$value->title,
+					"description" =>$value->description,
+					"type" => $value->type,
+					"date" => $value->date,
+					);
 			
 		} 
 		echo json_encode($info);
+    	}
     }
 }

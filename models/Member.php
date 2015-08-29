@@ -24,6 +24,7 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property integer $status
  */
 class Member extends \yii\db\ActiveRecord
 {
@@ -41,8 +42,9 @@ class Member extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'first_name', 'last_name', 'role'], 'required'],
+            [['username', 'password', 'first_name', 'last_name', 'status'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
+            [['status'], 'integer'],
             [['username', 'password', 'role', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
             [['first_name', 'last_name', 'middle_name', 'phone', 'mobile'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 250],
@@ -73,6 +75,7 @@ class Member extends \yii\db\ActiveRecord
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
+            'status' => 'Status',
         ];
     }
 

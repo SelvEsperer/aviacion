@@ -8,15 +8,28 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\models\app\models;
 
 /**
  * MemberController implements the CRUD actions for Member model.
  */
 class MemberController extends Controller
 {
+	public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
+        		'access' => [
+        				'class' => AccessControl::className(),
+        				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -117,5 +130,56 @@ class MemberController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    public function actionLogin() {
+    	$headers = Yii::$app->request->headers;
+    	$username = null;
+    	$password = null;
+    	$message = array();
+    	if(($headers->get('username') != null) && ($headers->get('password') != null)) {
+    		$username = $headers->get('username');
+    		$password = $headers->get('password');
+    	} else {
+    		$message["success"] = FALSE;
+    		$message["message"] = "username or password cannot be empty! Please try again.";
+    		return json_encode($message);
+    	}
+    	
+    	$record = Member::find()->where(['username' => $username])->one();
+    	if ($record != null && $record->password === $password) {
+    		$record->status = TRUE;
+    		$record->save();
+    		$message["success"] = True;
+    		$message["role"] = $record->role;
+    		$message["first name"] = $record->first_name;
+    		$message["last name"] = $record->last_name;
+    		$message["message"] = "Login Successful!";
+    		return json_encode($message);
+    	} else {
+    		$message["success"] = FALSE;
+    		$message["message"] = "Incorrect username or password! Please try again.";
+    		return json_encode($message);
+    	}
+    	
+    }
+    public function actionLogout() {
+    	$headers = Yii::$app->request->headers;
+    	$username = null;
+    	$message = array();
+    	while (($headers->get('username') != null)) {
+    		$username = $headers->get('username');
+    		$record = Member::find()->where(['username' => $username])->one();
+    		if ($record != null && $record->status != FALSE){
+    			$record->status = FALSE;
+    			$record->save();
+    			$message["success"] = True;    
+    			$message["message"] = "Logout Successful!";
+    			return json_encode($message);
+    		} else {
+    			$message["success"] = FALSE;
+    			$message["message"] = "Please login to continue.";
+    			return json_encode($message);
+    		}
+    	}
     }
 }

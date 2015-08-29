@@ -15,6 +15,10 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property string $image
+ * @property string $title
+ * @property string $contact_address
+ * @property string $contact_number
  */
 class Agent extends \yii\db\ActiveRecord
 {
@@ -32,10 +36,12 @@ class Agent extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code'], 'required'],
+            [['name'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
-            [['name', 'descripton'], 'string', 'max' => 255],
-            [['code', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 100]
+            [['image'], 'string'],
+            [['name', 'title'], 'string', 'max' => 50],
+            [['code', 'created_by_id', 'last_modified_by_id', 'contact_address', 'contact_number'], 'string', 'max' => 100],
+            [['descripton'], 'string', 'max' => 512]
         ];
     }
 
@@ -53,6 +59,10 @@ class Agent extends \yii\db\ActiveRecord
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
+            'image' => 'Image',
+            'title' => 'Title',
+            'contact_address' => 'Contact Address',
+            'contact_number' => 'Contact Number',
         ];
     }
 

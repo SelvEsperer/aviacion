@@ -15,13 +15,16 @@ use Yii;
  * @property string $mobile
  * @property string $email
  * @property string $visit_us
- * @property string $social_link
+ * @property string $facebook
  * @property string $title
  * @property string $created_by_id
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
  * @property string $code
+ * @property string $twitter
+ * @property string $googleplus
+ * @property string $linkedin
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -39,12 +42,11 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code'], 'required'],
+            [['name'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
             [['name', 'address'], 'string', 'max' => 256],
             [['description'], 'string', 'max' => 512],
-            [['phone', 'mobile', 'email', 'visit_us', 'social_link', 'title', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
-            [['code'], 'string', 'max' => 45]
+            [['phone', 'mobile', 'email', 'visit_us', 'facebook', 'title', 'created_by_id', 'last_modified_by_id', 'code', 'twitter', 'googleplus', 'linkedin'], 'string', 'max' => 50]
         ];
     }
 
@@ -62,13 +64,16 @@ class Company extends \yii\db\ActiveRecord
             'mobile' => 'Mobile',
             'email' => 'Email',
             'visit_us' => 'Visit Us',
-            'social_link' => 'Social Link',
+            'facebook' => 'Facebook',
             'title' => 'Title',
             'created_by_id' => 'Created By ID',
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
             'code' => 'Code',
+            'twitter' => 'Twitter',
+            'googleplus' => 'Googleplus',
+            'linkedin' => 'Linkedin',
         ];
     }
 

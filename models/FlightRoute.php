@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "flight_route".
  *
  * @property string $id
- * @property string $flight_id
- * @property string $category_id
+ * @property integer $flight_id
+ * @property integer $category_id
  * @property string $destination
  * @property string $distance
  * @property string $round_trip

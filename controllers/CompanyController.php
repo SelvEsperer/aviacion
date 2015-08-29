@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\models\Contact;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
@@ -17,6 +19,16 @@ class CompanyController extends Controller
     public function behaviors()
     {
         return [
+        		'access' => [
+        				'class' => AccessControl::className(),
+        				'only' => ['index', 'view', 'create', 'update', 'delete'],
+        				'rules' => [
+        						[
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        				],
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -122,39 +134,47 @@ class CompanyController extends Controller
      * Shows the inforamtions about Company Model
      */
     public function actionList() {
-    	$company = Company::find()->where(['code' => 'ARIRANG'])->one();
-    	$info = array(
-    			"id"  => $company->id,
-    			"name"  => $company->name,
-    			"description"  => $company->description,
-    			"address"  => $company->address,
-    			"phone"  => $company->phone,
-    			"mobile"  => $company->mobile,
-    			"email"  => $company->email,
-    			"visit_us"  => $company->visit_us,
-    			"social_link"  => $company->social_link,
-    			"title"  => $company->title    					
-    	);
-    	echo json_encode($info);
+    	if($this->authenticate()) {
+    		$company = Company::find()->where(['code' => 'ARIRANG'])->one();
+    		$info = array(
+    				"id"  => $company->id,
+    				"name"  => $company->name,
+    				"description"  => $company->description,
+    				"address"  => $company->address,
+    				"phone"  => $company->phone,
+    				"mobile"  => $company->mobile,
+    				"email"  => $company->email,
+    				"visit_us"  => $company->visit_us,
+    				"facebook"  => $company->facebook,
+    				"twitter"  => $company->twitter,
+    				"googleplus"  => $company->googleplus,
+    				"linkedin"  => $company->linkedin,
+    				"title"  => $company->title
+    		);
+    		echo json_encode($info);
+    	}
+    	
     }
-    
     /**
-     * Finds company by id
+     * Shows Contact info about company
      */
     public function actionContacts($id) {
-    	$contacts = Contact::find()->where(['company_id' => $id])->all();
-    	$info = array();
-    	foreach ($contacts as $key => $value) {
-    		$info[] = array(
-    				"id"  => $value->id,
-    				"titile" => $value->title,
-    				"subtitle" => $value->subtitle,
-    				"email"  => $value->email,
-    				"phone"  => $value->phone,
-    				"mobile"  => $value->mobile
-    
-    		);
+    	if($this->authenticate()) {
+    		$contacts = Contact::find()->where(['company_id' => $id])->all();
+    		$info = array();
+    		foreach ($contacts as $key => $value) {
+    			$info[] = array(
+    					"id"  => $value->id,
+    					"title" => $value->title,
+    					"subtitle" => $value->subtitle,
+    					"email"  => $value->email,
+    					"phone"  => $value->phone,
+    					"mobile"  => $value->mobile
+    		
+    			);
+    		}
+    		echo json_encode($info);
     	}
-    	echo json_encode($info);
+    	
     }
 }

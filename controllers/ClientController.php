@@ -3,18 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Flight;
+use app\models\Client;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use app\models\FlightRoute;
 
 /**
- * FlightController implements the CRUD actions for Flight model.
+ * ClientController implements the CRUD actions for Client model.
  */
-class FlightController extends Controller
+class ClientController extends Controller
 {
     public function behaviors()
     {
@@ -28,7 +27,7 @@ class FlightController extends Controller
         								'roles' => ['@'],
         						],
         				],
-        		],        		
+        		],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,13 +38,13 @@ class FlightController extends Controller
     }
 
     /**
-     * Lists all Flight models.
+     * Lists all Client models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Flight::find(),
+            'query' => Client::find(),
         ]);
 
         return $this->render('index', [
@@ -54,8 +53,8 @@ class FlightController extends Controller
     }
 
     /**
-     * Displays a single Flight model.
-     * @param string $id
+     * Displays a single Client model.
+     * @param integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -66,13 +65,13 @@ class FlightController extends Controller
     }
 
     /**
-     * Creates a new Flight model.
+     * Creates a new Client model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Flight();
+        $model = new Client();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -84,9 +83,9 @@ class FlightController extends Controller
     }
 
     /**
-     * Updates an existing Flight model.
+     * Updates an existing Client model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -103,9 +102,9 @@ class FlightController extends Controller
     }
 
     /**
-     * Deletes an existing Flight model.
+     * Deletes an existing Client model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -116,87 +115,42 @@ class FlightController extends Controller
     }
 
     /**
-     * Finds the Flight model based on its primary key value.
+     * Finds the Client model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Flight the loaded model
+     * @param integer $id
+     * @return Client the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Flight::findOne($id)) !== null) {
+        if (($model = Client::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
     /**
-     * Shows flight list by category
-     * @param string $id
+     * Shows the inforamtions about Announcement Model
      */
-    public function actionCategory($id) {
-    	if($this->authenticate()) {
-    		$flights = Flight::find()->where(['category_id' => $id])->all();
-    		$info = array();
-    		foreach ($flights as $key => $value) {
-    			$info[] = array(
-    					"id"  => $value->id,
-    					"category_id" => $value->category_id,
-    					"name"  => $value->name,
-    					"description"  => $value->description
-    		
-    			);
-    		}
-    		echo json_encode($info);
+    public function actionList() {
+    	if($this->authenticate()){
+    	$info = array();
+    	$client = Client::find()->all();
+    	foreach ($client as $key => $value) {
+    		$info []=  array(
+    				"name" => $value->name,
+    				"title" =>$value->title,
+    				"description" =>$value->description,
+    				"image" => $value->image
+    		);
+    			
     	}
-    	
+    	echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
+    	}
     }
-    
-    /**
-     * Show info about Flight Route 
-     */
-    public function actionRoute($id){
-   		if($this->authenticate()) {
-   			$route = FlightRoute::find()->where(['category_id' => $id])->all();
-   			$info = array();
-   			foreach ($route as $key => $value) {
-   				$info[] = array(
-   						"id" => $value->id,
-   						"destination" => $value->destination,
-   						"distance" => $value->distance,
-   						"roundtrip" => $value->round_trip,
-   						"city" => $value->city,
-   				);
-   			}
-   			echo json_encode($info);
-   		}
-    	
-    }
-    
-    /**
-     * Shows the inforamtions about Flight Model
-     * Filtered by ID
-     * 
-     */
-    public function actionDetails($id) {
-   		if($this->authenticate()) {
-   			$flight = Flight::find()->where(['id' => $id])->one();
-   			$info = array(
-   					"name"  => $flight->name,
-   					"image" =>$flight->image,
-   					"description"  => $flight->description,
-   					"speed"  => $flight->speed,
-   					"capacity"  => $flight->capacity,
-   					"resgistration_mark" => $flight->registration_mark,
-   					"endurance" => $flight->endurance,
-   					"cruising_level" => $flight->cruising_level,
-   					"luggage_capacity" => $flight->luggage_capacity
-   			);
-   			 
-   			echo json_encode($info);
-   		}
-    	
-    }
-    
 }
