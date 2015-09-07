@@ -16,7 +16,7 @@ class CompanyController extends Controller
 {
     public function behaviors()
     {
-        return [
+        return [        	
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -40,7 +40,21 @@ class CompanyController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+	
+    /**
+     * Lists all Company models.
+     * @return mixed
+     */
+    public function actionInformation() {
+    	$company = Company::find()->where(['code' => 'ARIRANG'])->one();
+    	$info = array(
+    			"name"  => $company->company,
+    			"2" => "2",
+    			"3" => "3"
+    	);
+    	echo json_encode($info);
+    }
+    
     /**
      * Displays a single Company model.
      * @param string $id

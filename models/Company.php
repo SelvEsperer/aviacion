@@ -21,6 +21,7 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property string $code
  */
 class Company extends \yii\db\ActiveRecord
 {
