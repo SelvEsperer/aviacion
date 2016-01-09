@@ -152,6 +152,11 @@ class CompanyController extends Controller
     				"title"  => $company->title
     		);
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
     	
     }
@@ -174,6 +179,11 @@ class CompanyController extends Controller
     			);
     		}
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
     	
     }

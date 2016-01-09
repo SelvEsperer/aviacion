@@ -147,6 +147,11 @@ class SchoolController extends Controller
     				"safety_program" =>$school->safety_program
     		);
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
     	
     }
@@ -168,6 +173,11 @@ class SchoolController extends Controller
     			);
     		}
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
     	
     }
@@ -194,7 +204,11 @@ class SchoolController extends Controller
     			);
     		}
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
-    	
     }
 }

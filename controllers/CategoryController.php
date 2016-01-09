@@ -147,6 +147,11 @@ class CategoryController extends Controller
     				
     		}
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
 
     }
@@ -161,8 +166,12 @@ class CategoryController extends Controller
    					"description" => $category->description
    			);
    			echo json_encode($info);
-   		}
-
+   		} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
+    	}
     }
     /**
      * Shows list of flight filtered by code
@@ -179,7 +188,11 @@ class CategoryController extends Controller
     			);
     		}
    		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
-    	
     }
 }

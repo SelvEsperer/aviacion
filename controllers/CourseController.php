@@ -151,6 +151,11 @@ class CourseController extends Controller
     			);
     		}
     		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
     	}
     	
     }
