@@ -15,6 +15,7 @@ use Yii;
  * @property string $image2
  * @property string $image3
  * @property string $code
+ * @property string $long_description
  */
 class Activity extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,8 @@ class Activity extends \yii\db\ActiveRecord
             [['school_id'], 'integer'],
             [['image1', 'image2', 'image3'], 'string'],
             [['name', 'code'], 'string', 'max' => 50],
-            [['description'], 'string', 'max' => 512]
+            [['description'], 'string', 'max' => 512],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -54,6 +56,7 @@ class Activity extends \yii\db\ActiveRecord
             'image2' => 'Image2',
             'image3' => 'Image3',
             'code' => 'Code',
+            'long_description' => 'Long Description',
         ];
     }
 

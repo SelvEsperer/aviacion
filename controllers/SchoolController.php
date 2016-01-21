@@ -169,7 +169,8 @@ class SchoolController extends Controller
     					"description" => $value->description,
     					"image1" => $value->image1,
     					"image2" => $value->image2,
-    					"image3" => $value->image3
+    					"image3" => $value->image3,
+    					"long_description" => $value->long_description
     			);
     		}
     		echo json_encode($info);

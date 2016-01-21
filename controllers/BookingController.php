@@ -144,7 +144,7 @@ class BookingController extends Controller
     	$message = array();    	
     	$book = new Booking();
     	$flag = TRUE;
-    	var_dump($data['from_location']);
+    	
     	if (is_null($data['from_location'])) {
     		$message["success"] = false;
     		$message["message"] = "Booking is unsuccessful.The field 'from_location' cannot be empty. " ;
