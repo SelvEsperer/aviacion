@@ -3,9 +3,9 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Category]].
+ * This is the ActiveQuery class for [[MemberType]].
  *
- * @see Category
+ * @see MemberType
  */
 class CategoryQuery extends \yii\db\ActiveQuery
 {
@@ -17,7 +17,7 @@ class CategoryQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Category[]|array
+     * @return MemberType[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class CategoryQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Category|array|null
+     * @return MemberType|array|null
      */
     public function one($db = null)
     {

@@ -142,10 +142,12 @@ class AgentController extends Controller
     	$info = array();
     	foreach ($agent as $key=>$value) {
     		$info[] = array(
+    				"id" => $value->id,
     				"name" => $value->name, 
     				"title" => $value->title,
-    				"desctription" => $value->descripton,
-    				"image" => $value->image
+    				"description" => $value->description,
+    				"image" => $value->image,
+    				"long_description" => $value->long_description
     		);
     	}
     	echo json_encode($info);

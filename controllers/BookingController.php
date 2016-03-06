@@ -39,7 +39,8 @@ class BookingController extends Controller
 	            ],
 	        ];
 	    }
-
+	    
+	    
     /**
      * Lists all Booking models.
      * @return mixed
@@ -155,6 +156,16 @@ class BookingController extends Controller
     		$message["message"] = "Booking is unsuccessful.The field 'to_location' cannot be empty. " ;
     		echo json_encode($message);
     		$flag = false;
+    	} else if (is_null($data['passengers'])) {
+    		$message["success"] = false;
+    		$message["message"] = "Booking is unsuccessful.The field 'passengers' cannot be empty. " ;
+    		echo json_encode($message);
+    		$flag = false;
+    	} else if (is_null($data['flight_type'])) {
+    		$message["success"] = false;
+    		$message["message"] = "Booking is unsuccessful.The field 'flight_type' cannot be empty. " ;
+    		echo json_encode($message);
+    		$flag = false;
     	} else if (is_null($data['departure_date'])) {
     		$message["success"] = false;
     		$message["message"] = "Booking is unsuccessful.The field 'departure_date' cannot be empty. " ;
@@ -165,14 +176,14 @@ class BookingController extends Controller
     		$message["message"] = "Booking is unsuccessful.The field 'arrival_date' cannot be empty. " ;
     		echo json_encode($message);
     		$flag = false;
-    	} else if (is_null($data['first_name'])) {
+    	} else if (is_null($data['flight_category'])) {
     		$message["success"] = false;
-    		$message["message"] = "Booking is unsuccessful.The field 'first_name' cannot be empty. " ;
+    		$message["message"] = "Booking is unsuccessful.The field 'flight_ category' cannot be empty. " ;
     		echo json_encode($message);
     		$flag = false;
-    	} else if (is_null($data['last_name'])) {
+    	} else if (is_null($data['destination'])) {
     		$message["success"] = false;
-    		$message["message"] = "Booking is unsuccessful.The field 'last_name' cannot be empty. " ;
+    		$message["message"] = "Booking is unsuccessful.The field 'destination' cannot be empty. " ;
     		echo json_encode($message);
     		$flag = false;
     	} else if (is_null($data['contact_number'])) {
@@ -185,7 +196,12 @@ class BookingController extends Controller
     		$message["message"] = "Booking is unsuccessful.The field 'email_address' cannot be empty. " ;
     		echo json_encode($message);
     		$flag = false;
-    	} 
+    	} else if (is_null($data['name'])) {
+    		$message["success"] = false;
+    		$message["message"] = "Booking is unsuccessful.The field 'name' cannot be empty. " ;
+    		echo json_encode($message);
+    		$flag = false;
+    	}
     	
     	/*foreach ($data as $key=>$value) {
     		if (is_null($data[$key])) {
@@ -198,21 +214,16 @@ class BookingController extends Controller
        	}*/
        	switch ($flag) {
        		case true:
-       			$book->flight_type = $data['flight_type'];
-       			$book->name = $data['name'];
+       			$book->flight_category = $data['flight_category'];
+       			$book->destination = $data['destination'];
        			$book->from_location = $data['from_location'];
        			$book->to_location = $data['to_location'];
        			$book->departure_date = $data['departure_date'];
        			$book->arrival_date = $data['arrival_date'];
-       			$book->person = $data['person'];
-       			$book->age = $data['age'];
-       			$book->first_name = $data['first_name'];
-       			$book->last_name = $data['last_name'];
-       			$book->middle_name = $data['middle_name'];
-       			$book->passport_number = $data['passport_number'];
-       			$book->date_of_birth = $data['date_of_birth'];
-       			$book->company_name = $data['company_name'];
-       			$book->agent_name = $data['agent_name'];
+       			$book->passengers = $data['passengers'];
+       			$book->flight_type = $data['flight_type'];
+       			$book->name = $data['name'];
+       			
        			$book->contact_number = $data['contact_number'];
        			$book->email_address = $data['email_address'];
        			$book->country = $data['country'];
@@ -220,6 +231,8 @@ class BookingController extends Controller
        			$book->city = $data['city'];
        			$book->street_address = $data['street_address'];
        			$book->zipcode = $data['zipcode'];
+       			$book->house_address = $data['house_address'];
+       			$book->message = $data['message'];
        			
        			if($book->save() === true){
        				$message["success"] = TRUE;

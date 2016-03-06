@@ -32,6 +32,7 @@ class ClientController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                	'list' => ['get'],
                 ],
             ],
         ];
@@ -141,7 +142,10 @@ class ClientController extends Controller
     				"name" => $value->name,
     				"title" =>$value->title,
     				"description" =>$value->description,
-    				"image" => $value->image
+    				"image" => $value->image,
+    				"contact_address" => $value->contact_address,
+    				"contact_number" => $value->contact_number,
+    				"long_description" => $value->long_description
     		);
     			
     	}

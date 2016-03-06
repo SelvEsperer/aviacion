@@ -45,7 +45,8 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider
+        ([
             'query' => Category::find(),
         ]);
 
@@ -142,7 +143,9 @@ class CategoryController extends Controller
     			$info []=  array(
     					"id" => $value->id,
     					"name" =>$value->name,
-    					"description" =>$value->description
+    					"description" =>$value->description,
+    					"code" => $value->code,
+    					"long_description" => $value->long_description
     			);
     				
     		}
@@ -162,11 +165,15 @@ class CategoryController extends Controller
    		if($this->authenticate()) {
    			$category = Category::find()->where(['id'=> $id])->one();
    			$info = array(
+   					"id" => $category->id,
    					"name" => $category->name,
-   					"description" => $category->description
+   					"description" => $category->description,
+   					"long_description" => $category->long_description
    			);
    			echo json_encode($info);
-   		} else {
+   		} 
+   		else 
+   		{
     		$message = array();
     		$message["Success"] = FALSE;
     		$message["Message"] = "Incorrect username or password. Please try again.";
@@ -176,15 +183,24 @@ class CategoryController extends Controller
     /**
      * Shows list of flight filtered by code
      */
-    public function actionFlights($id){
-    	if($this->authenticate()) {
-    	$flight = Flight::find()->where(['like', 'code', $id])->all();
+    public function actionFlights($code)
+    {
+    	if($this->authenticate()) 
+    	{
+    	$flight = Flight::find()->where(['like', 'code', $code])->all();
     	$info = array();
-   		foreach ($flight as $key=>$value) {
-   			$info[] = array (
+   		foreach ($flight as $key=>$value) 
+   		{
+   			$info[] = array 
+   			(
+   					"id" => $value->id,
    					"name" => $value->name,
    					"description" => $value->description,
-   					"image" => $value->image
+   					"image" => $value->image,
+   					"speed" => $value->speed,
+   					"capacity" => $value->capacity,
+   					"cruising_level" => $value->cruising_level,
+   					"long_description" => $value->long_description
     			);
     		}
    		echo json_encode($info);

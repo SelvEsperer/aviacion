@@ -23,6 +23,9 @@ use Yii;
  * @property string $last_modified_by_date
  * @property integer $category_id
  * @property string $code
+ * @property string $image2
+ * @property string $image3
+ * @property string $long_description
  */
 class Flight extends \yii\db\ActiveRecord
 {
@@ -41,12 +44,13 @@ class Flight extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'description', 'category_id', 'code'], 'required'],
-            [['image'], 'string'],
+            [['image', 'image2', 'image3'], 'string'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
             [['category_id'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 256],
-            [['speed', 'capacity', 'registration_mark', 'endurance', 'cruising_level', 'luggage_capacity', 'created_by_id', 'last_modified_by_id', 'code'], 'string', 'max' => 50]
+            [['speed', 'capacity', 'registration_mark', 'endurance', 'cruising_level', 'luggage_capacity', 'created_by_id', 'last_modified_by_id', 'code'], 'string', 'max' => 50],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -72,15 +76,18 @@ class Flight extends \yii\db\ActiveRecord
             'last_modified_by_date' => 'Last Modified By Date',
             'category_id' => 'Category ID',
             'code' => 'Code',
+            'image2' => 'Image2',
+            'image3' => 'Image3',
+            'long_description' => 'Long Description',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return FlightQuery the active query used by this AR class.
+     * @return CategoryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new FlightQuery(get_called_class());
+        return new CategoryQuery(get_called_class());
     }
 }

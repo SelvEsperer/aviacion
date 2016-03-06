@@ -18,6 +18,7 @@ use Yii;
  * @property string $last_modified_by_date
  * @property string $code
  * @property string $date
+ * @property string $long_description
  */
 class Announcement extends \yii\db\ActiveRecord
 {
@@ -35,11 +36,13 @@ class Announcement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'code', 'date'], 'required'],
+            [['id', 'title', 'code', 'date'], 'required'],
+            [['id'], 'integer'],
             [['duration', 'created_by_date', 'last_modified_by_date', 'date'], 'safe'],
             [['title', 'created_by_id', 'last_modified_by_id', 'code'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 512],
-            [['type'], 'string', 'max' => 100]
+            [['type'], 'string', 'max' => 100],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -60,15 +63,16 @@ class Announcement extends \yii\db\ActiveRecord
             'last_modified_by_date' => 'Last Modified By Date',
             'code' => 'Code',
             'date' => 'Date',
+            'long_description' => 'Long Description',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return AnnouncementQuery the active query used by this AR class.
+     * @return AgentQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new AnnouncementQuery(get_called_class());
+        return new AgentQuery(get_called_class());
     }
 }

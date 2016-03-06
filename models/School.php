@@ -19,6 +19,8 @@ use Yii;
  * @property string $last_modified_by_date
  * @property string $simulation_info
  * @property string $safety_program
+ * @property string $long_description
+ * @property string $long_description2
  */
 class School extends \yii\db\ActiveRecord
 {
@@ -39,9 +41,10 @@ class School extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
             [['name'], 'string', 'max' => 100],
-            [['description'], 'string', 'max' => 1024],
-            [['about', 'simulation_info', 'safety_program'], 'string', 'max' => 1024],
-            [['email', 'address', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50]
+            [['description'], 'string', 'max' => 512],
+            [['about', 'simulation_info', 'safety_program'], 'string', 'max' => 200],
+            [['email', 'address', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
+            [['long_description', 'long_description2'], 'string', 'max' => 2048]
         ];
     }
 
@@ -63,6 +66,8 @@ class School extends \yii\db\ActiveRecord
             'last_modified_by_date' => 'Last Modified By Date',
             'simulation_info' => 'Simulation Info',
             'safety_program' => 'Safety Program',
+            'long_description' => 'Long Description',
+            'long_description2' => 'Long Description2',
         ];
     }
 

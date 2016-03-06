@@ -19,6 +19,7 @@ use Yii;
  * @property string $contact_address
  * @property string $contact_number
  * @property string $title
+ * @property string $long_description
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -40,7 +41,8 @@ class Client extends \yii\db\ActiveRecord
             [['image'], 'string'],
             [['created_by_date', 'last_modified_by_date'], 'safe'],
             [['name', 'code', 'created_by_id', 'last_modified_by_id', 'contact_address', 'contact_number', 'title'], 'string', 'max' => 50],
-            [['description'], 'string', 'max' => 512]
+            [['description'], 'string', 'max' => 512],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -62,15 +64,16 @@ class Client extends \yii\db\ActiveRecord
             'contact_address' => 'Contact Address',
             'contact_number' => 'Contact Number',
             'title' => 'Title',
+            'long_description' => 'Long Description',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return ClientQuery the active query used by this AR class.
+     * @return CategoryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new ClientQuery(get_called_class());
+        return new CategoryQuery(get_called_class());
     }
 }

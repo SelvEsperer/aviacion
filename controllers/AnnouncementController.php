@@ -139,10 +139,12 @@ class AnnouncementController extends Controller
     	$announcement = Announcement::find()->all();
 		foreach ($announcement as $key => $value) {
 			$info []=  array(
+					"id" => $value->id,
 					"title" =>$value->title,
 					"description" =>$value->description,
 					"type" => $value->type,
 					"date" => $value->date,
+					"long_description" => $value->long_description
 					);
 			
 		} 

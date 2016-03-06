@@ -22,6 +22,7 @@ use Yii;
  * @property string $school_id
  * @property string $solo
  * @property string $instrument_time
+ * @property string $long_description
  */
 class Course extends \yii\db\ActiveRecord
 {
@@ -45,7 +46,8 @@ class Course extends \yii\db\ActiveRecord
             [['name', 'solo', 'instrument_time'], 'string', 'max' => 100],
             [['ground', 'flying', 'created_by_id', 'last_modified_by_id', 'min_age'], 'string', 'max' => 50],
             [['pre_requisite', 'education'], 'string', 'max' => 512],
-            [['description'], 'string', 'max' => 1000]
+            [['description'], 'string', 'max' => 1000],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -70,15 +72,16 @@ class Course extends \yii\db\ActiveRecord
             'school_id' => 'School ID',
             'solo' => 'Solo',
             'instrument_time' => 'Instrument Time',
+            'long_description' => 'Long Description',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return CourseQuery the active query used by this AR class.
+     * @return CategoryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CourseQuery(get_called_class());
+        return new CategoryQuery(get_called_class());
     }
 }

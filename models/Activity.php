@@ -62,10 +62,10 @@ class Activity extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return ActivityQuery the active query used by this AR class.
+     * @return AgentQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new ActivityQuery(get_called_class());
+        return new AgentQuery(get_called_class());
     }
 }

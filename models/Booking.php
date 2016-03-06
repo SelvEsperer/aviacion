@@ -8,21 +8,15 @@ use Yii;
  * This is the model class for table "booking".
  *
  * @property string $id
- * @property string $flight_type
- * @property string $name
+ * @property string $flight_category
+ * @property string $destination
  * @property string $from_location
  * @property string $to_location
  * @property string $departure_date
  * @property string $arrival_date
- * @property string $person
- * @property string $age
- * @property string $last_name
- * @property string $first_name
- * @property string $middle_name
- * @property string $passport_number
- * @property string $date_of_birth
- * @property string $company_name
- * @property string $agent_name
+ * @property string $passengers
+ * @property string $flight_type
+ * @property string $name
  * @property string $contact_number
  * @property string $email_address
  * @property string $country
@@ -34,6 +28,8 @@ use Yii;
  * @property string $created_by_date
  * @property string $last_modified_by_id
  * @property string $last_modified_by_date
+ * @property string $house_address
+ * @property string $message
  */
 class Booking extends \yii\db\ActiveRecord
 {
@@ -51,10 +47,13 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['departure_date', 'arrival_date', 'person', 'date_of_birth', 'created_by_date', 'last_modified_by_date'], 'safe'],
-            [['age'], 'integer'],
-            [['flight_type', 'last_name', 'first_name', 'middle_name', 'contact_number', 'email_address', 'country', 'street_address', 'state', 'city', 'zipcode', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
-            [['name', 'from_location', 'to_location', 'passport_number', 'company_name', 'agent_name'], 'string', 'max' => 100]
+            [['flight_category', 'destination', 'from_location', 'to_location', 'departure_date', 'arrival_date', 'passengers', 'flight_type', 'name', 'contact_number', 'email_address'], 'required'],
+            [['departure_date', 'arrival_date', 'created_by_date', 'last_modified_by_date'], 'safe'],
+            [['message'], 'string'],
+            [['flight_category', 'flight_type', 'country', 'state', 'city', 'zipcode', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
+            [['destination', 'from_location', 'to_location', 'contact_number', 'email_address', 'street_address', 'house_address'], 'string', 'max' => 100],
+            [['passengers'], 'string', 'max' => 10],
+            [['name'], 'string', 'max' => 200]
         ];
     }
 
@@ -65,21 +64,15 @@ class Booking extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'flight_type' => 'Flight Type',
-            'name' => 'Name',
+            'flight_category' => 'Flight Category',
+            'destination' => 'Destination',
             'from_location' => 'From Location',
             'to_location' => 'To Location',
             'departure_date' => 'Departure Date',
             'arrival_date' => 'Arrival Date',
-            'person' => 'Person',
-            'age' => 'Age',
-            'last_name' => 'Last Name',
-            'first_name' => 'First Name',
-            'middle_name' => 'Middle Name',
-            'passport_number' => 'Passport Number',
-            'date_of_birth' => 'Date Of Birth',
-            'company_name' => 'Company Name',
-            'agent_name' => 'Agent Name',
+            'passengers' => 'Passengers',
+            'flight_type' => 'Flight Type',
+            'name' => 'Name',
             'contact_number' => 'Contact Number',
             'email_address' => 'Email Address',
             'country' => 'Country',
@@ -91,6 +84,8 @@ class Booking extends \yii\db\ActiveRecord
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
             'last_modified_by_date' => 'Last Modified By Date',
+            'house_address' => 'House Address',
+            'message' => 'Message',
         ];
     }
 

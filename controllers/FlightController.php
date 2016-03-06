@@ -144,7 +144,8 @@ class FlightController extends Controller
     					"id"  => $value->id,
     					"category_id" => $value->category_id,
     					"name"  => $value->name,
-    					"description"  => $value->description
+    					"description"  => $value->description,
+    					"long_description" => $value->long_description
     		
     			);
     		}
@@ -171,7 +172,7 @@ class FlightController extends Controller
    						"destination" => $value->destination,
    						"distance" => $value->distance,
    						"roundtrip" => $value->round_trip,
-   						"city" => $value->city,
+   						"city" => $value->city
    				);
    			}
    			echo json_encode($info);
@@ -193,6 +194,7 @@ class FlightController extends Controller
    		if($this->authenticate()) {
    			$flight = Flight::find()->where(['id' => $id])->one();
    			$info = array(
+   					"id" => $flight->id,
    					"name"  => $flight->name,
    					"image" =>$flight->image,
    					"description"  => $flight->description,
@@ -201,7 +203,8 @@ class FlightController extends Controller
    					"resgistration_mark" => $flight->registration_mark,
    					"endurance" => $flight->endurance,
    					"cruising_level" => $flight->cruising_level,
-   					"luggage_capacity" => $flight->luggage_capacity
+   					"luggage_capacity" => $flight->luggage_capacity,
+   					"long_description" => $flight->long_description
    			);
    			 
    			echo json_encode($info);

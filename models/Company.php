@@ -25,6 +25,7 @@ use Yii;
  * @property string $twitter
  * @property string $googleplus
  * @property string $linkedin
+ * @property string $long_description
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -46,7 +47,8 @@ class Company extends \yii\db\ActiveRecord
             [['created_by_date', 'last_modified_by_date'], 'safe'],
             [['name', 'address'], 'string', 'max' => 256],
             [['description'], 'string', 'max' => 512],
-            [['phone', 'mobile', 'email', 'visit_us', 'facebook', 'title', 'created_by_id', 'last_modified_by_id', 'code', 'twitter', 'googleplus', 'linkedin'], 'string', 'max' => 50]
+            [['phone', 'mobile', 'email', 'visit_us', 'facebook', 'title', 'created_by_id', 'last_modified_by_id', 'code', 'twitter', 'googleplus', 'linkedin'], 'string', 'max' => 50],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -74,15 +76,16 @@ class Company extends \yii\db\ActiveRecord
             'twitter' => 'Twitter',
             'googleplus' => 'Googleplus',
             'linkedin' => 'Linkedin',
+            'long_description' => 'Long Description',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return CompanyQuery the active query used by this AR class.
+     * @return CategoryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CompanyQuery(get_called_class());
+        return new CategoryQuery(get_called_class());
     }
 }

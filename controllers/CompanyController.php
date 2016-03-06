@@ -149,7 +149,8 @@ class CompanyController extends Controller
     				"twitter"  => $company->twitter,
     				"googleplus"  => $company->googleplus,
     				"linkedin"  => $company->linkedin,
-    				"title"  => $company->title
+    				"title"  => $company->title,
+    				"long_description" => $company->long_description
     		);
     		echo json_encode($info);
     	} else {

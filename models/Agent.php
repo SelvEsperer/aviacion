@@ -10,7 +10,7 @@ use Yii;
  * @property string $id
  * @property string $name
  * @property string $code
- * @property string $descripton
+ * @property string $description
  * @property string $created_by_id
  * @property string $created_by_date
  * @property string $last_modified_by_id
@@ -19,6 +19,7 @@ use Yii;
  * @property string $title
  * @property string $contact_address
  * @property string $contact_number
+ * @property string $long_description
  */
 class Agent extends \yii\db\ActiveRecord
 {
@@ -41,7 +42,8 @@ class Agent extends \yii\db\ActiveRecord
             [['image'], 'string'],
             [['name', 'title'], 'string', 'max' => 50],
             [['code', 'created_by_id', 'last_modified_by_id', 'contact_address', 'contact_number'], 'string', 'max' => 100],
-            [['descripton'], 'string', 'max' => 512]
+            [['description'], 'string', 'max' => 512],
+            [['long_description'], 'string', 'max' => 2048]
         ];
     }
 
@@ -54,7 +56,7 @@ class Agent extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'code' => 'Code',
-            'descripton' => 'Descripton',
+            'description' => 'Description',
             'created_by_id' => 'Created By ID',
             'created_by_date' => 'Created By Date',
             'last_modified_by_id' => 'Last Modified By ID',
@@ -63,6 +65,7 @@ class Agent extends \yii\db\ActiveRecord
             'title' => 'Title',
             'contact_address' => 'Contact Address',
             'contact_number' => 'Contact Number',
+            'long_description' => 'Long Description',
         ];
     }
 

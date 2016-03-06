@@ -137,8 +137,10 @@ class CourseController extends Controller
     	if($this->authenticate()) {
     		$course = Course::find()->all();
     		$info = array();
-    		foreach ($course as $key => $value) {
+    		foreach ($course as $key => $value) 
+    		{
     			$info[] = array(
+    					"id" => $value->id,
     					"name"  => $value->name,
     					"description" => $value->description,
     					"ground"  => $value->ground,
@@ -147,7 +149,8 @@ class CourseController extends Controller
     					"education" => $value->education,
     					"min_age" =>$value->min_age,
     					"solo" => $value->solo,
-    					"instrument_time" => $value->instrument_time
+    					"instrument_time" => $value->instrument_time,
+    					"long_description" => $value->long_description
     			);
     		}
     		echo json_encode($info);

@@ -144,7 +144,9 @@ class SchoolController extends Controller
     				"address"  => $school->address,
     				"email"  => $school->email,
     				"simulation_info" =>$school->simulation_info,
-    				"safety_program" =>$school->safety_program
+    				"safety_program" =>$school->safety_program,
+    				"long_description" =>$school-> long_description,
+    				"long_description2" =>$school-> long_description2
     		);
     		echo json_encode($info);
     	} else {
@@ -201,7 +203,8 @@ class SchoolController extends Controller
     					"education" => $value->education,
     					"instrument_time" => $value->instrument_time,
     					"solo" => $value->solo,
-    					"min_age" =>$value->min_age
+    					"min_age" =>$value->min_age,
+    					"long_description" => $value->long_description
     			);
     		}
     		echo json_encode($info);
