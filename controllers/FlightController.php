@@ -172,7 +172,9 @@ class FlightController extends Controller
    						"destination" => $value->destination,
    						"distance" => $value->distance,
    						"roundtrip" => $value->round_trip,
-   						"city" => $value->city
+   						"city" => $value->city,
+   						"flight_type" => $value->flight_type,
+   						"code" => $value->code
    				);
    			}
    			echo json_encode($info);
@@ -182,8 +184,37 @@ class FlightController extends Controller
     		$message["Message"] = "Incorrect username or password. Please try again.";
     		echo json_encode($message);
     	}
-    	
     }
+    
+    
+    
+    
+
+    /**
+     * Show Airport List
+     */
+    public function actionAirport($flight_type){
+    	if($this->authenticate()) {
+    		$route = FlightRoute::find()->where(['flight_type' => $flight_type])->all();
+    		$info = array();
+    		foreach ($route as $key => $value) {
+    			$info[] = array(
+    					"destination" => $value->destination,
+    					"city" => $value->city,
+    					"code" => $value->code
+    			);
+    		}
+    		echo json_encode($info);
+    	} else {
+    		$message = array();
+    		$message["Success"] = FALSE;
+    		$message["Message"] = "Incorrect username or password. Please try again.";
+    		echo json_encode($message);
+    	}
+    }
+    
+    
+    
     
     /**
      * Shows the inforamtions about Flight Model

@@ -30,6 +30,7 @@ use Yii;
  * @property string $last_modified_by_date
  * @property string $house_address
  * @property string $message
+ * @property string $origin
  */
 class Booking extends \yii\db\ActiveRecord
 {
@@ -47,11 +48,11 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['flight_category', 'destination', 'from_location', 'to_location', 'departure_date', 'arrival_date', 'passengers', 'flight_type', 'name', 'contact_number', 'email_address'], 'required'],
+            [['flight_category', 'destination', 'from_location', 'to_location', 'departure_date', 'arrival_date', 'passengers', 'flight_type', 'name', 'contact_number', 'email_address', 'origin'], 'required'],
             [['departure_date', 'arrival_date', 'created_by_date', 'last_modified_by_date'], 'safe'],
             [['message'], 'string'],
             [['flight_category', 'flight_type', 'country', 'state', 'city', 'zipcode', 'created_by_id', 'last_modified_by_id'], 'string', 'max' => 50],
-            [['destination', 'from_location', 'to_location', 'contact_number', 'email_address', 'street_address', 'house_address'], 'string', 'max' => 100],
+            [['destination', 'from_location', 'to_location', 'contact_number', 'email_address', 'street_address', 'house_address', 'origin'], 'string', 'max' => 100],
             [['passengers'], 'string', 'max' => 10],
             [['name'], 'string', 'max' => 200]
         ];
@@ -86,6 +87,7 @@ class Booking extends \yii\db\ActiveRecord
             'last_modified_by_date' => 'Last Modified By Date',
             'house_address' => 'House Address',
             'message' => 'Message',
+            'origin' => 'Origin',
         ];
     }
 

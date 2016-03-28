@@ -15,6 +15,8 @@ use Yii;
  * @property string $round_trip
  * @property string $city
  * @property string $long_description
+ * @property string $flight_type
+ * @property string $code
  */
 class FlightRoute extends \yii\db\ActiveRecord
 {
@@ -34,7 +36,9 @@ class FlightRoute extends \yii\db\ActiveRecord
         return [
             [['flight_id', 'category_id'], 'integer'],
             [['destination', 'distance', 'round_trip', 'city'], 'string', 'max' => 50],
-            [['long_description'], 'string', 'max' => 2048]
+            [['long_description'], 'string', 'max' => 2048],
+            [['flight_type'], 'string', 'max' => 45],
+            [['code'], 'string', 'max' => 10]
         ];
     }
 
@@ -52,15 +56,17 @@ class FlightRoute extends \yii\db\ActiveRecord
             'round_trip' => 'Round Trip',
             'city' => 'City',
             'long_description' => 'Long Description',
+            'flight_type' => 'Flight Type',
+            'code' => 'Code',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return CategoryQuery the active query used by this AR class.
+     * @return FlightRouteQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CategoryQuery(get_called_class());
+        return new FlightRouteQuery(get_called_class());
     }
 }
